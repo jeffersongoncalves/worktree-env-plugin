@@ -67,7 +67,7 @@ class WorktreeEnvService(private val project: Project) {
                 currentAppUrl = null
             } else {
                 val appUrl = EnvConfigurator.readEnvValue(envFile, "APP_URL")
-                if (appUrl != null && appUrl.contains(detected.worktreeFolderName)) {
+                if (appUrl != null && appUrl.lowercase().contains(detected.worktreeFolderName.lowercase())) {
                     status = WorktreeStatus.CONFIGURED
                     currentAppUrl = appUrl
                 } else {

@@ -85,9 +85,13 @@ class WorktreeEnvStartupActivity : ProjectActivity {
 
         if (settings.openEnvInEditor) {
             val envFile = File(info.worktreeRoot, ".env")
-            val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(envFile)
-            if (virtualFile != null) {
-                FileEditorManager.getInstance(project).openFile(virtualFile, true)
+            com.intellij.openapi.application.ApplicationManager.getApplication().invokeLater {
+                com.intellij.openapi.application.WriteAction.run<Throwable> {
+                    val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(envFile)
+                    if (virtualFile != null) {
+                        FileEditorManager.getInstance(project).openFile(virtualFile, true)
+                    }
+                }
             }
         }
 

@@ -193,8 +193,12 @@ class WorktreeEnvToolWindowPanel(private val project: Project) : JPanel(BorderLa
     private fun onOpenEnv() {
         val info = service.info ?: return
         val envFile = File(info.worktreeRoot, ".env")
-        val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(envFile) ?: return
-        FileEditorManager.getInstance(project).openFile(virtualFile, true)
+        com.intellij.openapi.application.ApplicationManager.getApplication().invokeLater {
+            com.intellij.openapi.application.WriteAction.run<Throwable> {
+                val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(envFile) ?: return@run
+                FileEditorManager.getInstance(project).openFile(virtualFile, true)
+            }
+        }
     }
 
     private fun onRefresh() {

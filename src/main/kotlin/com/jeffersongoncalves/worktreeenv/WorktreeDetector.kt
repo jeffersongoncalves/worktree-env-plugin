@@ -77,6 +77,6 @@ object WorktreeDetector {
         if (!envFile.exists()) return false
 
         val appUrl = EnvConfigurator.readEnvValue(envFile, "APP_URL") ?: return false
-        return appUrl.contains(info.worktreeFolderName)
+        return appUrl.lowercase().contains(info.worktreeFolderName.lowercase())
     }
 }
