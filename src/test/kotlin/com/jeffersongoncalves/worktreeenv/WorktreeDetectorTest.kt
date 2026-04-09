@@ -64,6 +64,47 @@ class WorktreeDetectorTest {
     }
 
     @Test
+    fun `detects worktree with forward slash paths in gitdir`() {
+        val mainProject = File(tmp.root, "myapp").apply { mkdirs() }
+        val mainGitDir = File(mainProject, ".git").apply { mkdirs() }
+        File(mainGitDir, "HEAD").writeText("ref: refs/heads/main")
+
+        val worktreesDir = File(mainGitDir, "worktrees/feature").apply { mkdirs() }
+        File(worktreesDir, "commondir").writeText("../..")
+        File(worktreesDir, "HEAD").writeText("ref: refs/heads/feature")
+
+        val worktreeProject = File(tmp.root, "myapp-feature").apply { mkdirs() }
+        // Use forward slashes explicitly (as Git on Windows does)
+        val forwardSlashPath = worktreesDir.absolutePath.replace("\\", "/")
+        File(worktreeProject, ".git").writeText("gitdir: $forwardSlashPath")
+
+        val result = WorktreeDetector.detect(worktreeProject)
+        assertNotNull(result)
+        assertEquals("myapp-feature", result!!.worktreeFolderName)
+        assertEquals("myapp", result.mainFolderName)
+    }
+
+    @Test
+    fun `detects worktree with relative gitdir path`() {
+        val mainProject = File(tmp.root, "myapp").apply { mkdirs() }
+        val mainGitDir = File(mainProject, ".git").apply { mkdirs() }
+        File(mainGitDir, "HEAD").writeText("ref: refs/heads/main")
+
+        val worktreesDir = File(mainGitDir, "worktrees/feature").apply { mkdirs() }
+        File(worktreesDir, "commondir").writeText("../..")
+        File(worktreesDir, "HEAD").writeText("ref: refs/heads/feature")
+
+        // Worktree is sibling of main project, use relative path
+        val worktreeProject = File(tmp.root, "myapp-feature").apply { mkdirs() }
+        File(worktreeProject, ".git").writeText("gitdir: ../myapp/.git/worktrees/feature")
+
+        val result = WorktreeDetector.detect(worktreeProject)
+        assertNotNull(result)
+        assertEquals("myapp-feature", result!!.worktreeFolderName)
+        assertEquals("myapp", result.mainFolderName)
+    }
+
+    @Test
     fun `isEnvAlreadyConfigured returns false when env does not exist`() {
         val info = WorktreeInfo(
             worktreeRoot = File(tmp.root, "wt").apply { mkdirs() },

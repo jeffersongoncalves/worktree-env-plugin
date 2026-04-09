@@ -27,10 +27,11 @@ object WorktreeDetector {
         if (!content.startsWith("gitdir:")) return null
 
         val gitdirPath = content.removePrefix("gitdir:").trim()
-        val gitdirFile = if (File(gitdirPath).isAbsolute) {
-            File(gitdirPath).canonicalFile
+        val normalizedPath = gitdirPath.replace("\\", "/")
+        val gitdirFile = if (File(normalizedPath).isAbsolute) {
+            File(normalizedPath).canonicalFile
         } else {
-            File(baseDir, gitdirPath).canonicalFile
+            File(baseDir, normalizedPath).canonicalFile
         }
 
         val mainGitDir = resolveMainGitDir(gitdirFile)
@@ -40,7 +41,7 @@ object WorktreeDetector {
         val mainRoot = mainGitDir.parentFile?.canonicalFile ?: return null
         val worktreeRoot = baseDir.canonicalFile
 
-        if (worktreeRoot == mainRoot) return null
+        if (pathsEqual(worktreeRoot, mainRoot)) return null
 
         return WorktreeInfo(
             worktreeRoot = worktreeRoot,
@@ -54,7 +55,7 @@ object WorktreeDetector {
         val commondirFile = File(gitdirFile, "commondir")
         if (!commondirFile.exists()) return null
 
-        val commondirPath = commondirFile.readText().trim()
+        val commondirPath = commondirFile.readText().trim().replace("\\", "/")
         val mainGitDir = File(gitdirFile, commondirPath).canonicalFile
 
         return if (File(mainGitDir, "HEAD").exists()) mainGitDir else null
@@ -70,6 +71,15 @@ object WorktreeDetector {
             current = current.parentFile
         }
         return null
+    }
+
+    /**
+     * Compare two paths in a cross-platform way.
+     * Uses canonicalPath string comparison (case-insensitive on Windows,
+     * case-sensitive on macOS/Linux) via the canonical form.
+     */
+    private fun pathsEqual(a: File, b: File): Boolean {
+        return a.canonicalPath == b.canonicalPath
     }
 
     fun isEnvAlreadyConfigured(info: WorktreeInfo): Boolean {
