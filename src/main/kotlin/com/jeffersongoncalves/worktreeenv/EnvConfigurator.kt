@@ -45,13 +45,13 @@ object EnvConfigurator {
 
     private fun resolveAppUrl(info: WorktreeInfo, pattern: String, sourceEnv: File): String {
         if (pattern.isNotBlank()) {
-            return pattern.replace("{folder}", info.worktreeFolderName)
+            return pattern.replace("{folder}", info.worktreeFolderName).lowercase()
         }
 
         val currentUrl = readEnvValue(sourceEnv, "APP_URL")
-            ?: return "http://${info.worktreeFolderName}.test"
+            ?: return "http://${info.worktreeFolderName}.test".lowercase()
 
-        return replaceUrlHost(currentUrl, info.mainFolderName, info.worktreeFolderName)
+        return replaceUrlHost(currentUrl, info.mainFolderName, info.worktreeFolderName).lowercase()
     }
 
     @Suppress("UNUSED_PARAMETER")
