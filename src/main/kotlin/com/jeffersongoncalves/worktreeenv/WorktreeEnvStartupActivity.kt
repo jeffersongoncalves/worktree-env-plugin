@@ -13,15 +13,17 @@ import java.io.File
 class WorktreeEnvStartupActivity : ProjectActivity {
 
     override suspend fun execute(project: Project) {
+        val service = WorktreeEnvService.getInstance(project)
+        service.refresh()
+
         val settings = WorktreeEnvSettings.getInstance()
         val basePath = project.basePath ?: return
 
         if (!settings.autoConfigureOnOpen) return
         if (settings.isIgnored(basePath)) return
+        if (service.status != WorktreeStatus.UNCONFIGURED) return
 
-        val info = WorktreeDetector.detect(project) ?: return
-        if (WorktreeDetector.isEnvAlreadyConfigured(info)) return
-
+        val info = service.info ?: return
         val sourceEnv = File(info.mainRoot, ".env")
         if (!sourceEnv.exists()) return
 
@@ -77,6 +79,9 @@ class WorktreeEnvStartupActivity : ProjectActivity {
         }
 
         VirtualFileManager.getInstance().asyncRefresh {}
+
+        val service = WorktreeEnvService.getInstance(project)
+        service.refresh()
 
         if (settings.openEnvInEditor) {
             val envFile = File(info.worktreeRoot, ".env")

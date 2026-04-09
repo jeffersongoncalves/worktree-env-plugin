@@ -7,11 +7,32 @@
     </vendor>
 
     <description><![CDATA[
-    Automatically detects Git worktree projects and configures the <code>.env</code> file
-    by copying it from the main project and adjusting <code>APP_URL</code> to match
-    the worktree folder name.<br><br>
-    Perfect for Laravel developers using Git worktrees with Laravel Herd or Valet,
-    where each worktree folder maps to a local hostname (e.g., <code>myapp-feature.test</code>).
+    <h2>Worktree Env Configurator — Auto-configure .env for Git Worktrees</h2>
+    <p>Automatically detects when a Laravel project is opened as a <b>Git worktree</b> and
+    configures the <code>.env</code> file by copying it from the main project and adjusting
+    <code>APP_URL</code> to match the worktree folder name.</p>
+
+    <h3>Features</h3>
+    <ul>
+        <li><b>Auto-detection</b> — Detects Git worktree projects on open</li>
+        <li><b>Smart APP_URL</b> — Preserves scheme, TLD, port, and path from the original URL</li>
+        <li><b>Status bar widget</b> — Shows worktree .env status at a glance (green = configured, orange = pending)</li>
+        <li><b>Tool window</b> — Full status panel with worktree info and actions in the right sidebar</li>
+        <li><b>Live updates</b> — UI reacts to .env file changes in real time</li>
+        <li><b>Configurable pattern</b> — Use <code>{folder}</code> placeholder for custom URL patterns</li>
+        <li><b>.env.testing support</b> — Optionally copies and configures the testing env</li>
+    </ul>
+
+    <h3>Quick Start</h3>
+    <ol>
+        <li>Open a Git worktree project in PhpStorm</li>
+        <li>The plugin detects the worktree and shows a notification</li>
+        <li>Click <b>Configure .env</b> or use the tool window</li>
+        <li>Status bar turns green when configured</li>
+    </ol>
+
+    <p>Perfect for Laravel developers using Git worktrees with Laravel Herd or Valet,
+    where each worktree folder maps to a local hostname (e.g., <code>myapp-feature.test</code>).</p>
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
@@ -21,6 +42,9 @@
     <resource-bundle>messages.WorktreeEnvBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <projectService
+            serviceImplementation="com.jeffersongoncalves.worktreeenv.WorktreeEnvService"/>
+
         <postStartupActivity
             implementation="com.jeffersongoncalves.worktreeenv.WorktreeEnvStartupActivity"/>
 
@@ -33,6 +57,18 @@
             id="com.jeffersongoncalves.worktreeenv.settings.WorktreeEnvConfigurable"
             displayName="Worktree Env Configurator"/>
 
+        <toolWindow
+            id="Worktree Env"
+            anchor="right"
+            secondary="true"
+            icon="/icons/worktree.svg"
+            factoryClass="com.jeffersongoncalves.worktreeenv.ui.WorktreeEnvToolWindowFactory"/>
+
+        <statusBarWidgetFactory
+            id="WorktreeEnvStatusBarWidget"
+            implementation="com.jeffersongoncalves.worktreeenv.ui.WorktreeEnvStatusBarWidgetFactory"
+            order="after encodingWidget"/>
+
         <notificationGroup
             id="WorktreeEnvConfigurator"
             displayType="BALLOON"/>
@@ -43,7 +79,8 @@
             id="WorktreeEnv.ConfigureNow"
             class="com.jeffersongoncalves.worktreeenv.actions.ConfigureEnvAction"
             text="Configure Worktree .env"
-            description="Configure .env file for the current Git worktree">
+            description="Configure .env file for the current Git worktree"
+            icon="/icons/worktree.svg">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
         </action>
     </actions>
