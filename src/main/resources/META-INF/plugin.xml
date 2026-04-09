@@ -1,0 +1,47 @@
+<idea-plugin>
+    <id>br.tec.jsg.worktreeenv</id>
+    <name>Worktree Env Configurator</name>
+    <vendor email="contato@jsg.tec.br" url="https://github.com/jeffersongoncalves">Jefferson Goncalves</vendor>
+
+    <description><![CDATA[
+    Automatically detects Git worktree projects and configures the <code>.env</code> file
+    by copying it from the main project and adjusting <code>APP_URL</code> to match
+    the worktree folder name.<br><br>
+    Perfect for Laravel developers using Git worktrees with Laravel Herd or Valet,
+    where each worktree folder maps to a local hostname (e.g., <code>myapp-feature.test</code>).
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>Git4Idea</depends>
+    <depends>com.jetbrains.php</depends>
+
+    <resource-bundle>messages.WorktreeEnvBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity
+            implementation="br.tec.jsg.worktreeenv.WorktreeEnvStartupActivity"/>
+
+        <applicationService
+            serviceImplementation="br.tec.jsg.worktreeenv.settings.WorktreeEnvSettings"/>
+
+        <applicationConfigurable
+            parentId="tools"
+            instance="br.tec.jsg.worktreeenv.settings.WorktreeEnvConfigurable"
+            id="br.tec.jsg.worktreeenv.settings.WorktreeEnvConfigurable"
+            displayName="Worktree Env Configurator"/>
+
+        <notificationGroup
+            id="WorktreeEnvConfigurator"
+            displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <action
+            id="WorktreeEnv.ConfigureNow"
+            class="br.tec.jsg.worktreeenv.actions.ConfigureEnvAction"
+            text="Configure Worktree .env"
+            description="Configure .env file for the current Git worktree">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
