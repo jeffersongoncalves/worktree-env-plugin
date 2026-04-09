@@ -4,6 +4,12 @@
 
 **Worktree Env Configurator** is a JetBrains plugin that detects when a Laravel project is opened as a [Git worktree](https://git-scm.com/docs/git-worktree) and automatically configures the `.env` file by copying it from the main project and adjusting `APP_URL` to match the worktree folder name.
 
+## Screenshots
+
+| Not Configured | Configured |
+|:-:|:-:|
+| ![Tool Window - Not Configured](docs/screenshots/not-configured.png) | ![Tool Window - Configured](docs/screenshots/configured.png) |
+
 ## The Problem
 
 When using Git worktrees with Laravel projects, each worktree lives in a separate folder (e.g., `myapp-feature-payment`) and needs its own `.env` with `APP_URL` pointing to the correct local hostname. With Laravel Herd or Valet, this means `http://myapp-feature-payment.test`.
