@@ -1,7 +1,10 @@
 <idea-plugin>
     <id>com.jeffersongoncalves.worktreeenv</id>
     <name>Worktree Env Configurator</name>
-    <vendor email="contato@jsg.tec.br" url="https://github.com/jeffersongoncalves">Jefferson Goncalves</vendor>
+    <vendor email="jefferson@jeffersongoncalves.com"
+            url="https://github.com/jeffersongoncalves">
+        Jefferson Goncalves
+    </vendor>
 
     <description><![CDATA[
     Automatically detects Git worktree projects and configures the <code>.env</code> file

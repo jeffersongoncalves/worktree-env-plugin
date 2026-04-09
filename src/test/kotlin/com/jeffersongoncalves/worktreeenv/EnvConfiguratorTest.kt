@@ -1,14 +1,16 @@
 package com.jeffersongoncalves.worktreeenv
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.io.TempDir
+import org.junit.Assert.*
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
 import java.io.File
 
 class EnvConfiguratorTest {
 
-    @TempDir
-    lateinit var tmp: File
+    @Rule
+    @JvmField
+    val tmp = TemporaryFolder()
 
     @Test
     fun `replaceUrlHost preserves scheme and TLD`() {
@@ -52,8 +54,8 @@ class EnvConfiguratorTest {
 
     @Test
     fun `configure copies env and updates APP_URL in auto-detect mode`() {
-        val mainDir = File(tmp, "myapp").apply { mkdirs() }
-        val wtDir = File(tmp, "myapp-feature").apply { mkdirs() }
+        val mainDir = File(tmp.root, "myapp").apply { mkdirs() }
+        val wtDir = File(tmp.root, "myapp-feature").apply { mkdirs() }
 
         File(mainDir, ".env").writeText(
             "APP_NAME=MyApp\nAPP_URL=http://myapp.test\nAPP_KEY=base64:xxx\nDB_HOST=127.0.0.1",
@@ -83,8 +85,8 @@ class EnvConfiguratorTest {
 
     @Test
     fun `configure uses pattern when provided`() {
-        val mainDir = File(tmp, "myapp").apply { mkdirs() }
-        val wtDir = File(tmp, "myapp-feature").apply { mkdirs() }
+        val mainDir = File(tmp.root, "myapp").apply { mkdirs() }
+        val wtDir = File(tmp.root, "myapp-feature").apply { mkdirs() }
 
         File(mainDir, ".env").writeText("APP_URL=http://myapp.test")
 
@@ -107,8 +109,8 @@ class EnvConfiguratorTest {
 
     @Test
     fun `configure returns error when source env does not exist`() {
-        val mainDir = File(tmp, "myapp").apply { mkdirs() }
-        val wtDir = File(tmp, "myapp-feature").apply { mkdirs() }
+        val mainDir = File(tmp.root, "myapp").apply { mkdirs() }
+        val wtDir = File(tmp.root, "myapp-feature").apply { mkdirs() }
 
         val info = WorktreeInfo(
             worktreeRoot = wtDir,
@@ -125,8 +127,8 @@ class EnvConfiguratorTest {
 
     @Test
     fun `configure copies env testing when requested`() {
-        val mainDir = File(tmp, "myapp").apply { mkdirs() }
-        val wtDir = File(tmp, "myapp-feature").apply { mkdirs() }
+        val mainDir = File(tmp.root, "myapp").apply { mkdirs() }
+        val wtDir = File(tmp.root, "myapp-feature").apply { mkdirs() }
 
         File(mainDir, ".env").writeText("APP_URL=http://myapp.test\nDB_HOST=127.0.0.1")
         File(mainDir, ".env.testing").writeText("APP_URL=http://myapp.test\nDB_HOST=sqlite")
@@ -151,7 +153,7 @@ class EnvConfiguratorTest {
 
     @Test
     fun `readEnvValue handles quoted values`() {
-        val envFile = File(tmp, ".env").apply {
+        val envFile = File(tmp.root, ".env").apply {
             writeText("APP_NAME=\"My App\"\nAPP_KEY='base64:secret'")
         }
 
@@ -161,7 +163,7 @@ class EnvConfiguratorTest {
 
     @Test
     fun `readEnvValue returns null for missing key`() {
-        val envFile = File(tmp, ".env").apply {
+        val envFile = File(tmp.root, ".env").apply {
             writeText("APP_NAME=Test")
         }
 

@@ -1,44 +1,51 @@
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.kotlin.jvm") version "2.1.10"
+    id("org.jetbrains.intellij.platform") version "2.6.0"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
-repositories {
-    mavenCentral()
-}
-
-intellij {
-    pluginName.set(providers.gradleProperty("pluginName"))
-    version.set(providers.gradleProperty("platformVersion"))
-    type.set(providers.gradleProperty("platformType"))
-    plugins.set(listOf("Git4Idea", "com.jetbrains.php"))
-    downloadSources.set(providers.gradleProperty("platformDownloadSources").map { it.toBoolean() })
-}
-
 kotlin {
     jvmToolchain(17)
 }
 
-tasks {
-    patchPluginXml {
-        sinceBuild.set(providers.gradleProperty("pluginSinceBuild"))
-        untilBuild.set(providers.gradleProperty("pluginUntilBuild"))
-    }
-
-    buildSearchableOptions {
-        enabled = false
-    }
-
-    test {
-        useJUnitPlatform()
+repositories {
+    mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
     }
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.10.2")
+    intellijPlatform {
+        phpstorm(providers.gradleProperty("platformVersion"))
+        bundledPlugin("Git4Idea")
+        bundledPlugin("com.jetbrains.php")
+        instrumentationTools()
+        testFramework(TestFrameworkType.Platform)
+    }
+
+    testImplementation("junit:junit:4.13.2")
+}
+
+intellijPlatform {
+    pluginConfiguration {
+        name = providers.gradleProperty("pluginName")
+        version = providers.gradleProperty("pluginVersion")
+        ideaVersion {
+            sinceBuild = providers.gradleProperty("pluginSinceBuild")
+            untilBuild = providers.gradleProperty("pluginUntilBuild")
+        }
+    }
+    buildSearchableOptions = false
+}
+
+tasks {
+    wrapper {
+        gradleVersion = "8.13"
+    }
 }
