@@ -1,4 +1,4 @@
-package br.tec.jsg.worktreeenv
+package com.jeffersongoncalves.worktreeenv
 
 import java.io.File
 import java.net.URI

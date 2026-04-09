@@ -1,6 +1,6 @@
-package br.tec.jsg.worktreeenv
+package com.jeffersongoncalves.worktreeenv
 
-import br.tec.jsg.worktreeenv.settings.WorktreeEnvSettings
+import com.jeffersongoncalves.worktreeenv.settings.WorktreeEnvSettings
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.fileEditor.FileEditorManager

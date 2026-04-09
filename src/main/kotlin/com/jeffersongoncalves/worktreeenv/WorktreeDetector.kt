@@ -1,4 +1,4 @@
-package br.tec.jsg.worktreeenv
+package com.jeffersongoncalves.worktreeenv
 
 import com.intellij.openapi.project.Project
 import java.io.File

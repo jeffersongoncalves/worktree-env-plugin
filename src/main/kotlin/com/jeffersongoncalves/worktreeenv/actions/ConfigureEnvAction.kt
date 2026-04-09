@@ -1,8 +1,8 @@
-package br.tec.jsg.worktreeenv.actions
+package com.jeffersongoncalves.worktreeenv.actions
 
-import br.tec.jsg.worktreeenv.WorktreeDetector
-import br.tec.jsg.worktreeenv.WorktreeEnvStartupActivity
-import br.tec.jsg.worktreeenv.settings.WorktreeEnvSettings
+import com.jeffersongoncalves.worktreeenv.WorktreeDetector
+import com.jeffersongoncalves.worktreeenv.WorktreeEnvStartupActivity
+import com.jeffersongoncalves.worktreeenv.settings.WorktreeEnvSettings
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.ActionUpdateThread

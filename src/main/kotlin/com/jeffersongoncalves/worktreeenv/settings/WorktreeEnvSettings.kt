@@ -1,4 +1,4 @@
-package br.tec.jsg.worktreeenv.settings
+package com.jeffersongoncalves.worktreeenv.settings
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent

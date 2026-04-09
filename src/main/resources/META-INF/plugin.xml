@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>br.tec.jsg.worktreeenv</id>
+    <id>com.jeffersongoncalves.worktreeenv</id>
     <name>Worktree Env Configurator</name>
     <vendor email="contato@jsg.tec.br" url="https://github.com/jeffersongoncalves">Jefferson Goncalves</vendor>
 
@@ -19,15 +19,15 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity
-            implementation="br.tec.jsg.worktreeenv.WorktreeEnvStartupActivity"/>
+            implementation="com.jeffersongoncalves.worktreeenv.WorktreeEnvStartupActivity"/>
 
         <applicationService
-            serviceImplementation="br.tec.jsg.worktreeenv.settings.WorktreeEnvSettings"/>
+            serviceImplementation="com.jeffersongoncalves.worktreeenv.settings.WorktreeEnvSettings"/>
 
         <applicationConfigurable
             parentId="tools"
-            instance="br.tec.jsg.worktreeenv.settings.WorktreeEnvConfigurable"
-            id="br.tec.jsg.worktreeenv.settings.WorktreeEnvConfigurable"
+            instance="com.jeffersongoncalves.worktreeenv.settings.WorktreeEnvConfigurable"
+            id="com.jeffersongoncalves.worktreeenv.settings.WorktreeEnvConfigurable"
             displayName="Worktree Env Configurator"/>
 
         <notificationGroup
@@ -38,7 +38,7 @@
     <actions>
         <action
             id="WorktreeEnv.ConfigureNow"
-            class="br.tec.jsg.worktreeenv.actions.ConfigureEnvAction"
+            class="com.jeffersongoncalves.worktreeenv.actions.ConfigureEnvAction"
             text="Configure Worktree .env"
             description="Configure .env file for the current Git worktree">
             <add-to-group group-id="ToolsMenu" anchor="last"/>

@@ -1,4 +1,4 @@
-package br.tec.jsg.worktreeenv
+package com.jeffersongoncalves.worktreeenv
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
