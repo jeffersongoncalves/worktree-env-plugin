@@ -30,6 +30,14 @@ Today this is manual: copy `.env`, edit `APP_URL`. This plugin automates it.
 
 ## Installation
 
+### From JetBrains Marketplace
+
+1. Open PhpStorm → **Settings** → **Plugins** → **Marketplace**
+2. Search for **"Worktree Env Configurator"**
+3. Click **Install** and restart the IDE
+
+Or install directly from: [Worktree Env Configurator on JetBrains Marketplace](https://plugins.jetbrains.com/plugin/31190-worktree-env-configurator)
+
 ### From Disk
 
 1. Download the latest release `.zip` from [Releases](https://github.com/jeffersongoncalves/worktree-env-plugin/releases)
