@@ -1,4 +1,4 @@
-<idea-plugin>
+<idea-plugin url="https://github.com/jeffersongoncalves/worktree-env-plugin">
     <id>com.jeffersongoncalves.worktreeenv</id>
     <name>Worktree Env Configurator</name>
     <vendor email="jefferson@jeffersongoncalves.com"

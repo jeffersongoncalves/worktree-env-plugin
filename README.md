@@ -1,8 +1,15 @@
 # Worktree Env Configurator
 
+[![JetBrains Marketplace](https://img.shields.io/jetbrains/plugin/v/31190-worktree-env-configurator.svg)](https://plugins.jetbrains.com/plugin/31190-worktree-env-configurator)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/31190-worktree-env-configurator.svg)](https://plugins.jetbrains.com/plugin/31190-worktree-env-configurator)
+
 > Auto-configure `.env` files for Git worktree projects in PhpStorm.
 
 **Worktree Env Configurator** is a JetBrains plugin that detects when a Laravel project is opened as a [Git worktree](https://git-scm.com/docs/git-worktree) and automatically configures the `.env` file by copying it from the main project and adjusting `APP_URL` to match the worktree folder name.
+
+- **Homepage**: [GitHub](https://github.com/jeffersongoncalves/worktree-env-plugin)
+- **Marketplace**: [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/31190-worktree-env-configurator)
+- **Issues**: [GitHub Issues](https://github.com/jeffersongoncalves/worktree-env-plugin/issues)
 
 ## Screenshots
 
