@@ -1,5 +1,7 @@
 # Worktree Env Configurator
 
+![Worktree Env Configurator](banners/worktree-env.png)
+
 [![JetBrains Marketplace](https://img.shields.io/jetbrains/plugin/v/31190-worktree-env-configurator.svg)](https://plugins.jetbrains.com/plugin/31190-worktree-env-configurator)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/31190-worktree-env-configurator.svg)](https://plugins.jetbrains.com/plugin/31190-worktree-env-configurator)
 
