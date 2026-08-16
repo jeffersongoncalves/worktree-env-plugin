@@ -24,7 +24,6 @@ dependencies {
     intellijPlatform {
         phpstorm(providers.gradleProperty("platformVersion"))
         bundledPlugin("Git4Idea")
-        instrumentationTools()
         testFramework(TestFrameworkType.Platform)
     }
 
