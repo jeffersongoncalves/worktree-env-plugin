@@ -1,8 +1,8 @@
+![Worktree Env Configurator](banners/worktree-env.png)
+
 # Worktree Env Configurator
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/jeffersongoncalves)
-
-![Worktree Env Configurator](banners/worktree-env.png)
 
 [![JetBrains Marketplace](https://img.shields.io/jetbrains/plugin/v/31190-worktree-env-configurator.svg)](https://plugins.jetbrains.com/plugin/31190-worktree-env-configurator)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/31190-worktree-env-configurator.svg)](https://plugins.jetbrains.com/plugin/31190-worktree-env-configurator)
